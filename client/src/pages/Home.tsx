@@ -50,6 +50,11 @@ function LogoMark() {
   return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/himmat-logo-mark_800a8593.png" alt="" onError={() => setFailed(true)} /></span>;
 }
 
+const realProjects = [
+  { title: "تشطيب مسبح مودرن", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4" },
+  { title: "مسبح وجلسة خارجية", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4" },
+];
+
 const faqs = [
   ["هل تقدمون خدماتكم داخل أبوظبي؟", "نعم، نعمل في أبوظبي وننسق معكم لتحديد الموقع والموعد المناسب قبل الزيارة."],
   ["هل يمكن حجز تنظيف لمرة واحدة؟", "بالتأكيد. نوفر تنظيفًا لمرة واحدة، كما يمكن ترتيب زيارات دورية بحسب احتياج المسبح."],
@@ -75,7 +80,7 @@ export default function Home() {
             <span><b>همة الخليج</b><small>لإنشاء وصيانة المسابح</small></span>
           </button>
           <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="التنقل الرئيسي">
-            <button onClick={() => scrollTo("services")}>خدماتنا</button>
+            <button onClick={() => scrollTo("services")}>خدماتنا</button><button onClick={() => scrollTo("projects")}>أعمالنا</button>
             <button onClick={() => scrollTo("offer")}>العرض الحالي</button>
             <button onClick={() => scrollTo("process")}>كيف نعمل</button>
             <button onClick={() => scrollTo("reviews")}>آراء العملاء</button>
@@ -127,6 +132,13 @@ export default function Home() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section id="projects" className="section projects-section">
+          <div className="container projects-grid">
+            <div className="projects-intro"><span className="section-kicker">أعمالنا على أرض الواقع</span><h2>شوف الجودة<br /><span>قبل ما تحجز.</span></h2><p>هذه لقطات حقيقية من تنفيذ همة الخليج. شاهد التفاصيل بنفسك، ثم أرسل لنا صورة مسبحك لنقترح لك البداية المناسبة.</p><span className="project-line" aria-hidden="true" /></div>
+            <div className="project-reels">{realProjects.map((project, index) => <article className="project-video-card" key={project.src}><div className="project-video-frame"><video controls playsInline preload="metadata" aria-label={project.title}><source src={project.src} type="video/mp4" />متصفحك لا يدعم تشغيل الفيديو.</video><span className="project-index">0{index + 1}</span></div><div className="project-meta"><div><span>{project.label}</span><h3>{project.title}</h3></div><a href={whatsapp} target="_blank" rel="noreferrer" aria-label={`احجز مشروع ${project.title}`}><ArrowLeft size={17} /></a></div></article>)}</div>
           </div>
         </section>
 
