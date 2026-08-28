@@ -10,6 +10,7 @@ import {
   HardHat,
   Instagram,
   MapPin,
+  Music2,
   Menu,
   Phone,
   ShieldCheck,
@@ -24,6 +25,7 @@ const phone = "0555991700";
 const whatsapp = "https://wa.me/971555991700?text=" + encodeURIComponent("مرحبًا، أرغب في حجز خدمة للمسبح في أبوظبي.");
 const facebook = "https://www.facebook.com/himat.alkhalij.2025";
 const instagram = "https://www.instagram.com/alkhalijhimat";
+const tiktok = "https://www.tiktok.com/@himatalkhalij";
 
 const services = [
   {
@@ -140,7 +142,7 @@ export default function Home() {
 
         <section id="projects" className="section projects-section">
           <div className="container projects-grid">
-            <div className="projects-intro"><span className="section-kicker">أعمالنا على أرض الواقع</span><h2>شوف الجودة<br /><span>قبل ما تحجز.</span></h2><p>هذه لقطات حقيقية من تنفيذ همة الخليج. شاهد التفاصيل بنفسك، ثم أرسل لنا صورة مسبحك لنقترح لك البداية المناسبة.</p><span className="project-line" aria-hidden="true" /></div>
+            <div className="projects-intro"><span className="section-kicker">أعمالنا على أرض الواقع</span><h2>شوف الجودة<br /><span>قبل ما تحجز.</span></h2><p>هذه لقطات حقيقية من تنفيذ همة الخليج. شاهد التفاصيل بنفسك، ثم أرسل لنا صورة مسبحك لنقترح لك البداية المناسبة.</p><a className="button button-instagram project-social-cta" href={instagram} target="_blank" rel="noreferrer"><Instagram size={18} /> تابع أحدث أعمالنا <ArrowLeft size={17} /></a><span className="project-line" aria-hidden="true" /></div>
             <div className="project-reels">{realProjects.map((project, index) => <article className="project-video-card" key={project.src}><div className="project-video-frame"><video controls playsInline preload="metadata" aria-label={project.title}><source src={project.src} type="video/mp4" />متصفحك لا يدعم تشغيل الفيديو.</video><span className="project-index">0{index + 1}</span></div><div className="project-meta"><div><span>{project.label}</span><h3>{project.title}</h3></div><a href={whatsapp} target="_blank" rel="noreferrer" aria-label={`احجز مشروع ${project.title}`}><ArrowLeft size={17} /></a></div></article>)}</div>
           </div>
         </section>
@@ -166,7 +168,7 @@ export default function Home() {
         <section className="contact-cta"><div className="container contact-inner"><div><span className="section-kicker light">جاهز للماء الصافي؟</span><span className="local-badge light-badge">أبوظبي والإمارات</span><h2>خلّنا نبدأ<br /><i>من مسبحك.</i></h2></div><div className="contact-actions"><a className="button button-light" href={whatsapp} target="_blank" rel="noreferrer"><Waves size={18} /> واتساب الحجز</a><a className="contact-phone" href={`tel:${phone}`}><Phone size={18} /><span><small>اتصل مباشرة</small>{phone}</span></a></div></div></section>
       </main>
 
-      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><div className="social-links"><a className="social-link facebook-link" href={facebook} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على فيسبوك"><Facebook size={17} /><span>فيسبوك</span></a><a className="social-link instagram-link" href={instagram} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على إنستغرام"><Instagram size={17} /><span>إنستغرام</span></a></div><span className="copyright">© 2026 همة الخليج</span></div></footer>
+      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><div className="social-links"><a className="social-link facebook-link" href={facebook} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على فيسبوك"><Facebook size={17} /><span>فيسبوك</span></a><a className="social-link instagram-link" href={instagram} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على إنستغرام"><Instagram size={17} /><span>إنستغرام</span></a><a className="social-link tiktok-link" href={tiktok} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على تيك توك"><Music2 size={17} /><span>تيك توك</span></a></div><span className="copyright">© 2026 همة الخليج</span></div></footer>
       <a className="floating-wa" href={whatsapp} target="_blank" rel="noreferrer" aria-label="تواصل عبر واتساب"><span>واتساب الحجز</span><Waves size={25} /></a>
     </div>
   );
