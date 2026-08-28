@@ -51,8 +51,8 @@ function LogoMark() {
 }
 
 const realProjects = [
-  { title: "تشطيب مسبح مودرن", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4" },
-  { title: "مسبح وجلسة خارجية", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4" },
+  { title: "تشطيب مسبح", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4" },
+  { title: "مسبح وجلسة", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4" },
 ];
 
 const faqs = [
