@@ -8,6 +8,7 @@ import {
   Droplets,
   Facebook,
   HardHat,
+  Instagram,
   MapPin,
   Menu,
   Phone,
@@ -22,6 +23,7 @@ import {
 const phone = "0555991700";
 const whatsapp = "https://wa.me/971555991700?text=" + encodeURIComponent("مرحبًا، أرغب في حجز خدمة للمسبح في أبوظبي.");
 const facebook = "https://www.facebook.com/himat.alkhalij.2025";
+const instagram = "https://www.instagram.com/alkhalijhimat";
 
 const services = [
   {
@@ -164,7 +166,7 @@ export default function Home() {
         <section className="contact-cta"><div className="container contact-inner"><div><span className="section-kicker light">جاهز للماء الصافي؟</span><span className="local-badge light-badge">أبوظبي والإمارات</span><h2>خلّنا نبدأ<br /><i>من مسبحك.</i></h2></div><div className="contact-actions"><a className="button button-light" href={whatsapp} target="_blank" rel="noreferrer"><Waves size={18} /> واتساب الحجز</a><a className="contact-phone" href={`tel:${phone}`}><Phone size={18} /><span><small>اتصل مباشرة</small>{phone}</span></a></div></div></section>
       </main>
 
-      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><a className="facebook-link" href={facebook} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على فيسبوك"><Facebook size={17} /><span>صفحتنا على فيسبوك</span></a><span className="copyright">© 2026 همة الخليج</span></div></footer>
+      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><div className="social-links"><a className="social-link facebook-link" href={facebook} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على فيسبوك"><Facebook size={17} /><span>فيسبوك</span></a><a className="social-link instagram-link" href={instagram} target="_blank" rel="noreferrer" aria-label="صفحة همة الخليج على إنستغرام"><Instagram size={17} /><span>إنستغرام</span></a></div><span className="copyright">© 2026 همة الخليج</span></div></footer>
       <a className="floating-wa" href={whatsapp} target="_blank" rel="noreferrer" aria-label="تواصل عبر واتساب"><span>واتساب الحجز</span><Waves size={25} /></a>
     </div>
   );
