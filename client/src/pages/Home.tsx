@@ -47,7 +47,7 @@ const services = [
 
 function LogoMark() {
   const [failed, setFailed] = useState(false);
-  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/himmat-logo-mark_800a8593.png" alt="" onError={() => setFailed(true)} /></span>;
+  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/FB_IMG_1787926564260_74e1fc47.jpg" alt="همة الخليج لصيانة وتركيب المسابح" onError={() => setFailed(true)} /></span>;
 }
 
 const realProjects = [
@@ -77,7 +77,6 @@ export default function Home() {
         <div className="container topbar-inner">
           <button className="brand" onClick={() => scrollTo("top")} aria-label="العودة إلى بداية الموقع">
             <LogoMark />
-            <span><b>همة الخليج</b><small>لإنشاء وصيانة المسابح</small></span>
           </button>
           <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="التنقل الرئيسي">
             <button onClick={() => scrollTo("services")}>خدماتنا</button><button onClick={() => scrollTo("projects")}>أعمالنا</button>
@@ -163,7 +162,7 @@ export default function Home() {
         <section className="contact-cta"><div className="container contact-inner"><div><span className="section-kicker light">جاهز للماء الصافي؟</span><span className="local-badge light-badge">أبوظبي والإمارات</span><h2>خلّنا نبدأ<br /><i>من مسبحك.</i></h2></div><div className="contact-actions"><a className="button button-light" href={whatsapp} target="_blank" rel="noreferrer"><Waves size={18} /> واتساب الحجز</a><a className="contact-phone" href={`tel:${phone}`}><Phone size={18} /><span><small>اتصل مباشرة</small>{phone}</span></a></div></div></section>
       </main>
 
-      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /><span><b>همة الخليج</b><small>لإنشاء وصيانة المسابح</small></span></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><span className="copyright">© 2026 همة الخليج</span></div></footer>
+      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><span className="copyright">© 2026 همة الخليج</span></div></footer>
       <a className="floating-wa" href={whatsapp} target="_blank" rel="noreferrer" aria-label="تواصل عبر واتساب"><span>واتساب الحجز</span><Waves size={25} /></a>
     </div>
   );
