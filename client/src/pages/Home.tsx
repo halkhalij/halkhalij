@@ -1,5 +1,6 @@
 /* Design philosophy: واحة مائية معاصرة — editorial Gulf hospitality, warm ivory/sand surfaces, Gulf turquoise accents, asymmetric composition, calm purposeful motion. */
 import { useState } from "react";
+import { trpc } from "@/lib/trpc";
 import {
   ArrowLeft,
   ArrowUpLeft,
@@ -57,8 +58,8 @@ function LogoMark() {
 }
 
 const realProjects = [
-  { title: "تشطيب مسبح", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4" },
-  { title: "مسبح وجلسة", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4" },
+  { title: "تشطيب مسبح", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4", mediaType: "video" as const },
+  { title: "مسبح وجلسة", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4", mediaType: "video" as const },
 ];
 
 const faqs = [
@@ -67,8 +68,19 @@ const faqs = [
   ["كيف أحصل على عرض سعر؟", "أرسل لنا موقعك وصورة أو وصفًا بسيطًا للمسبح عبر واتساب، وسنعود لك بالتفاصيل المناسبة."],
 ];
 
+function getServiceIcon(key: string) {
+  if (key === "hardhat") return HardHat;
+  if (key === "wrench") return Wrench;
+  return Sparkles;
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const dbServices = trpc.publicContent.services.useQuery();
+  const dbProjects = trpc.publicContent.projects.useQuery();
+  const dbReviews = trpc.publicContent.reviews.useQuery();
+  const serviceItems = dbServices.data?.length ? dbServices.data.map((item, index) => ({ number: String(index + 1).padStart(2, "0"), title: item.title, text: item.description, image: item.imageUrl ?? "", icon: getServiceIcon(item.iconKey) })) : services;
+  const projectItems = dbProjects.data?.length ? dbProjects.data.map(item => ({ title: item.title, label: item.label ?? "", src: item.mediaUrl, mediaType: item.mediaType })) : realProjects;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const scrollTo = (id: string) => {
@@ -130,7 +142,7 @@ export default function Home() {
           <div className="container">
             <div className="section-heading split-heading"><div><span className="section-kicker">خدماتنا</span><h2>المسبح الجميل<br /><span>يبدأ من العناية.</span></h2></div><p>سواء كنت تبدأ من الصفر أو تريد استعادة بريق مسبحك، نضع خبرتنا في خدمتك بحلول عملية وتكلفة مدروسة.</p></div>
             <div className="services-list">
-              {services.map(({ number, title, text, image, icon: Icon }) => (
+              {serviceItems.map(({ number, title, text, image, icon: Icon }) => (
                 <article className="service-card" key={number}>
                   <div className="service-visual"><img src={image} alt={title} /><span className="service-number">{number}</span></div>
                   <div className="service-copy"><span className="service-icon"><Icon size={21} /></span><h3>{title}</h3><p>{text}</p><a href={whatsapp} target="_blank" rel="noreferrer" className="text-link">اطلب الخدمة <ArrowLeft size={16} /></a></div>
@@ -143,7 +155,7 @@ export default function Home() {
         <section id="projects" className="section projects-section">
           <div className="container projects-grid">
             <div className="projects-intro"><span className="section-kicker">أعمالنا على أرض الواقع</span><h2>شوف الجودة<br /><span>قبل ما تحجز.</span></h2><p>هذه لقطات حقيقية من تنفيذ همة الخليج. شاهد التفاصيل بنفسك، ثم أرسل لنا صورة مسبحك لنقترح لك البداية المناسبة.</p><a className="button button-instagram project-social-cta" href={instagram} target="_blank" rel="noreferrer"><Instagram size={18} /> تابع أحدث أعمالنا <ArrowLeft size={17} /></a><span className="project-line" aria-hidden="true" /></div>
-            <div className="project-reels">{realProjects.map((project, index) => <article className="project-video-card" key={project.src}><div className="project-video-frame"><video controls playsInline preload="metadata" aria-label={project.title}><source src={project.src} type="video/mp4" />متصفحك لا يدعم تشغيل الفيديو.</video><span className="project-index">0{index + 1}</span></div><div className="project-meta"><div><span>{project.label}</span><h3>{project.title}</h3></div><a href={whatsapp} target="_blank" rel="noreferrer" aria-label={`احجز مشروع ${project.title}`}><ArrowLeft size={17} /></a></div></article>)}</div>
+            <div className="project-reels">{projectItems.map((project, index) => <article className="project-video-card" key={project.src}><div className="project-video-frame">{project.mediaType === "image" ? <img src={project.src} alt={project.title} /> : <video controls playsInline preload="metadata" aria-label={project.title}><source src={project.src} type="video/mp4" />متصفحك لا يدعم تشغيل الفيديو.</video>}<span className="project-index">0{index + 1}</span></div><div className="project-meta"><div><span>{project.label}</span><h3>{project.title}</h3></div><a href={whatsapp} target="_blank" rel="noreferrer" aria-label={`احجز مشروع ${project.title}`}><ArrowLeft size={17} /></a></div></article>)}</div>
           </div>
         </section>
 
@@ -160,7 +172,7 @@ export default function Home() {
         </section>
 
         <section id="reviews" className="section reviews-section">
-          <div className="container reviews-inner"><div className="reviews-copy"><span className="section-kicker">آراء عملائنا</span><h2>تجربتك تصنع<br /><span>الفرق.</span></h2><p>نؤمن أن أفضل تقييم هو ما يكتبه عميلنا بنفسه. شاركنا تجربتك الحقيقية بعد الخدمة، لنساعد عملاء أبوظبي على اختيارهم بثقة.</p><div className="rating-prompt"><div className="stars" aria-label="ننتظر تقييمك"><Star /><Star /><Star /><Star /><Star /></div><b>ننتظر رأيك الحقيقي</b></div><a className="button button-turquoise" href={whatsapp} target="_blank" rel="noreferrer">أرسل تقييمك عبر واتساب <ArrowLeft size={17} /></a></div><div className="review-empty"><div className="review-quote">“</div><h3>نستقبل تجربتك</h3><p>أرسل تقييمك الحقيقي عبر واتساب، وبعد موافقتك يمكننا نشره هنا بكل شفافية واعتزاز.</p><a href={whatsapp} target="_blank" rel="noreferrer" className="text-link">شارك تجربتك <ArrowLeft size={16} /></a></div></div>
+          <div className="container reviews-inner"><div className="reviews-copy"><span className="section-kicker">آراء عملائنا</span><h2>تجربتك تصنع<br /><span>الفرق.</span></h2><p>نؤمن أن أفضل تقييم هو ما يكتبه عميلنا بنفسه. شاركنا تجربتك الحقيقية بعد الخدمة، لنساعد عملاء أبوظبي على اختيارهم بثقة.</p><div className="rating-prompt"><div className="stars" aria-label="ننتظر تقييمك"><Star /><Star /><Star /><Star /><Star /></div><b>ننتظر رأيك الحقيقي</b></div><a className="button button-turquoise" href={whatsapp} target="_blank" rel="noreferrer">أرسل تقييمك عبر واتساب <ArrowLeft size={17} /></a></div>{dbReviews.data?.length ? <div className="review-list">{dbReviews.data.map(review => <article className="review-empty" key={review.id}><div className="review-quote">“</div><h3>{review.customerName}</h3><p>{review.body}</p><div className="stars" aria-label={`${review.rating} من 5`}><Star /><Star /><Star /><Star /><Star /></div></article>)}</div> : <div className="review-empty"><div className="review-quote">“</div><h3>نستقبل تجربتك</h3><p>أرسل تقييمك الحقيقي عبر واتساب، وبعد موافقتك يمكننا نشره هنا بكل شفافية واعتزاز.</p><a href={whatsapp} target="_blank" rel="noreferrer" className="text-link">شارك تجربتك <ArrowLeft size={16} /></a></div>}</div>
         </section>
 
         <section className="section faq-section"><div className="container faq-grid"><div><span className="section-kicker">أسئلة سريعة</span><h2>قبل ما<br /><span>تتواصل.</span></h2></div><div className="faq-list">{faqs.map(([q, a], i) => <div className={openFaq === i ? "faq-item open" : "faq-item"} key={q}><button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span>{q}</span><ChevronDown size={19} /></button><div className="faq-answer"><p>{a}</p></div></div>)}</div></div></section>
