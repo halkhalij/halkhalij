@@ -26,28 +26,28 @@ const services = [
     number: "01",
     title: "إنشاء وتصميم المسابح",
     text: "من الفكرة الأولى حتى آخر تفصيلة، نصمم مسبحًا ينسجم مع بيتك وطريقة استخدامك.",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85",
+    image: "/manus-storage/himmat-real-pool-finish_7a066c0c.jpg",
     icon: HardHat,
   },
   {
     number: "02",
     title: "تنظيف احترافي",
     text: "مياه صافية، حواف نظيفة، وعناية دقيقة تعيد للمسبح إحساسه المنعش طوال العام.",
-    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=85",
+    image: "/manus-storage/himmat-real-water-detail_ed154fee.jpg",
     icon: Sparkles,
   },
   {
     number: "03",
     title: "صيانة وفحص دوري",
     text: "نتابع الفلاتر والمضخات والمياه بخطة واضحة تقلل الأعطال وتحافظ على سلامة السباحة.",
-    image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1400&q=85",
+    image: "/manus-storage/himmat-real-detail-2_a12d3e8b.jpg",
     icon: Wrench,
   },
 ];
 
 function LogoMark() {
   const [failed, setFailed] = useState(false);
-  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/FB_IMG_1787926564260_74e1fc47.jpg" alt="همة الخليج لصيانة وتركيب المسابح" onError={() => setFailed(true)} /></span>;
+  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/himmat-official-logo-cropped_178253bc.png" alt="همة الخليج لصيانة وتركيب المسابح" onError={() => setFailed(true)} /></span>;
 }
 
 const realProjects = [
