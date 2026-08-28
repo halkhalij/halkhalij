@@ -1,25 +1,158 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+/* Design philosophy: واحة مائية معاصرة — editorial Gulf hospitality, warm ivory/sand surfaces, Gulf turquoise accents, asymmetric composition, calm purposeful motion. */
+import { useState } from "react";
+import {
+  ArrowLeft,
+  ArrowUpLeft,
+  Check,
+  ChevronDown,
+  Droplets,
+  HardHat,
+  MapPin,
+  Menu,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Waves,
+  Wrench,
+  X,
+} from "lucide-react";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
+const phone = "0555991700";
+const whatsapp = "https://wa.me/971555991700?text=" + encodeURIComponent("مرحبًا، أرغب في حجز خدمة للمسبح في أبوظبي.");
+
+const services = [
+  {
+    number: "01",
+    title: "إنشاء وتصميم المسابح",
+    text: "من الفكرة الأولى حتى آخر تفصيلة، نصمم مسبحًا ينسجم مع بيتك وطريقة استخدامك.",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85",
+    icon: HardHat,
+  },
+  {
+    number: "02",
+    title: "تنظيف احترافي",
+    text: "مياه صافية، حواف نظيفة، وعناية دقيقة تعيد للمسبح إحساسه المنعش طوال العام.",
+    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=85",
+    icon: Sparkles,
+  },
+  {
+    number: "03",
+    title: "صيانة وفحص دوري",
+    text: "نتابع الفلاتر والمضخات والمياه بخطة واضحة تقلل الأعطال وتحافظ على سلامة السباحة.",
+    image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1400&q=85",
+    icon: Wrench,
+  },
+];
+
+function LogoMark() {
+  const [failed, setFailed] = useState(false);
+  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/himmat-logo-mark_800a8593.png" alt="" onError={() => setFailed(true)} /></span>;
+}
+
+const faqs = [
+  ["هل تقدمون خدماتكم داخل أبوظبي؟", "نعم، نعمل في أبوظبي وننسق معكم لتحديد الموقع والموعد المناسب قبل الزيارة."],
+  ["هل يمكن حجز تنظيف لمرة واحدة؟", "بالتأكيد. نوفر تنظيفًا لمرة واحدة، كما يمكن ترتيب زيارات دورية بحسب احتياج المسبح."],
+  ["كيف أحصل على عرض سعر؟", "أرسل لنا موقعك وصورة أو وصفًا بسيطًا للمسبح عبر واتساب، وسنعود لك بالتفاصيل المناسبة."],
+];
+
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
+    <div dir="rtl" className="site-shell">
+      <a className="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+      <header className="topbar">
+        <div className="container topbar-inner">
+          <button className="brand" onClick={() => scrollTo("top")} aria-label="العودة إلى بداية الموقع">
+            <LogoMark />
+            <span><b>همة الخليج</b><small>لإنشاء وصيانة المسابح</small></span>
+          </button>
+          <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="التنقل الرئيسي">
+            <button onClick={() => scrollTo("services")}>خدماتنا</button>
+            <button onClick={() => scrollTo("offer")}>العرض الحالي</button>
+            <button onClick={() => scrollTo("process")}>كيف نعمل</button>
+            <button onClick={() => scrollTo("reviews")}>آراء العملاء</button>
+            <a className="nav-call" href={`tel:${phone}`}><Phone size={16} /> اتصل بنا</a>
+          </nav>
+          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"} aria-expanded={menuOpen}>
+            {menuOpen ? <X size={23} /> : <Menu size={23} />}
+          </button>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <section id="top" className="hero">
+          <div className="hero-image" aria-hidden="true" />
+          <div className="hero-overlay" />
+          <div className="container hero-content">
+            <div className="hero-copy reveal">
+              <div className="eyebrow"><span className="eyebrow-line" /> أبوظبي والإمارات</div>
+              <h1>من أول غطسة،<br /><em>تبدأ الجودة.</em></h1>
+              <p>نبني ونعتني بالمسابح التي تجعل كل يوم في البيت أجمل. تصميم متقن، مياه صافية، وصيانة تريح بالك.</p>
+              <div className="hero-actions">
+                <a className="button button-primary" href={whatsapp} target="_blank" rel="noreferrer"><Waves size={18} /> احجز عبر واتساب <ArrowLeft size={17} /></a>
+                <a className="button button-ghost" href={`tel:${phone}`}><Phone size={17} /> {phone}</a>
+              </div>
+              <div className="hero-note"><ShieldCheck size={17} /> معاينة أولية وتواصل مباشر بدون تعقيد</div><span className="local-badge">أبوظبي والإمارات</span>
+            </div>
+            <div className="hero-stamp"><span>POOL CARE</span><strong>01</strong><small>نحو مسبح<br />أنظف وأجمل</small></div>
+          </div>
+          <div className="hero-scroll">مرّر لاكتشاف خدماتنا <ArrowUpLeft size={16} /></div>
+        </section>
+
+        <section className="trust-band">
+          <div className="container trust-grid">
+            <div className="trust-intro"><span className="section-kicker">لماذا همة الخليج؟</span><strong>حلول واضحة<br />ونتيجة تلاحظها.</strong></div>
+            <div className="trust-item"><span className="trust-icon"><ShieldCheck /></span><div><b>أمان وعناية</b><small>اهتمام بالتفاصيل التي تحميك</small></div></div>
+            <div className="trust-item"><span className="trust-icon"><Droplets /></span><div><b>مياه صافية</b><small>تنظيف وفحص بمعايير دقيقة</small></div></div>
+            <div className="trust-item"><span className="trust-icon"><MapPin /></span><div><b>من أبوظبي</b><small>خدمة محلية تصل إليك</small></div></div>
+          </div>
+        </section>
+
+        <section id="services" className="section services-section">
+          <div className="container">
+            <div className="section-heading split-heading"><div><span className="section-kicker">خدماتنا</span><h2>المسبح الجميل<br /><span>يبدأ من العناية.</span></h2></div><p>سواء كنت تبدأ من الصفر أو تريد استعادة بريق مسبحك، نضع خبرتنا في خدمتك بحلول عملية وتكلفة مدروسة.</p></div>
+            <div className="services-list">
+              {services.map(({ number, title, text, image, icon: Icon }) => (
+                <article className="service-card" key={number}>
+                  <div className="service-visual"><img src={image} alt={title} /><span className="service-number">{number}</span></div>
+                  <div className="service-copy"><span className="service-icon"><Icon size={21} /></span><h3>{title}</h3><p>{text}</p><a href={whatsapp} target="_blank" rel="noreferrer" className="text-link">اطلب الخدمة <ArrowLeft size={16} /></a></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="offer" className="offer-section">
+          <div className="container offer-inner">
+            <div className="offer-copy"><span className="section-kicker light">عرض الموسم</span><h2>خلّي مسبحك<br /><i>جاهزًا للصيف.</i></h2><p>تنظيف شامل بأحدث التقنيات، وفريق محترف يترك المياه صافية والنظافة ملموسة.</p><a className="button button-light" href={whatsapp} target="_blank" rel="noreferrer">احجز العرض الآن <ArrowLeft size={17} /></a></div>
+            <div className="offer-badge"><span>خصم</span><strong>خيالي</strong><small>لفترة محدودة فقط</small></div>
+            <div className="offer-wave" aria-hidden="true"><Waves size={116} strokeWidth={0.8} /></div>
+          </div>
+        </section>
+
+        <section id="process" className="section process-section">
+          <div className="container process-grid"><div className="process-title"><span className="section-kicker">بكل بساطة</span><h2>من الرسالة<br />إلى <span>الغطسة.</span></h2><p>نختصر عليك الطريق بثلاث خطوات واضحة، ونبقى قريبين منك في كل مرحلة.</p></div><div className="steps"><div className="step"><span>01</span><div><h3>تواصل معنا</h3><p>اتصل أو أرسل موقعك وصورة للمسبح عبر واتساب.</p></div></div><div className="step"><span>02</span><div><h3>نعاين ونقترح</h3><p>نفهم احتياجك ونوضح لك الحل والتكلفة قبل البدء.</p></div></div><div className="step"><span>03</span><div><h3>ننجز ونعتني</h3><p>فريقنا ينفذ العمل بعناية ويترك المكان جاهزًا.</p></div></div></div></div>
+        </section>
+
+        <section id="reviews" className="section reviews-section">
+          <div className="container reviews-inner"><div className="reviews-copy"><span className="section-kicker">آراء العملاء</span><h2>صوتك يصنع<br /><span>الفرق.</span></h2><p>نؤمن أن أفضل تقييم هو ما يكتبه عميلنا بنفسه. أرسل تجربتك الحقيقية لنشاركها مع من يبحث عن خدمة موثوقة في أبوظبي.</p><div className="rating-prompt"><div className="stars" aria-label="أرسل تقييمك"><Star /><Star /><Star /><Star /><Star /></div><b>تقييمك يهمنا</b></div><a className="button button-turquoise" href={whatsapp} target="_blank" rel="noreferrer">أرسل تقييمك عبر واتساب <ArrowLeft size={17} /></a></div><div className="review-empty"><div className="review-quote">“</div><h3>مساحتك هنا</h3><p>نستقبل تقييمات العملاء الحقيقية ونضيفها هنا بكل شفافية بعد مشاركتها معنا.</p><a href={whatsapp} target="_blank" rel="noreferrer" className="text-link">شارك تجربتك <ArrowLeft size={16} /></a></div></div>
+        </section>
+
+        <section className="section faq-section"><div className="container faq-grid"><div><span className="section-kicker">أسئلة سريعة</span><h2>قبل ما<br /><span>تتواصل.</span></h2></div><div className="faq-list">{faqs.map(([q, a], i) => <div className={openFaq === i ? "faq-item open" : "faq-item"} key={q}><button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span>{q}</span><ChevronDown size={19} /></button><div className="faq-answer"><p>{a}</p></div></div>)}</div></div></section>
+
+        <section className="contact-cta"><div className="container contact-inner"><div><span className="section-kicker light">جاهز للماء الصافي؟</span><span className="local-badge light-badge">أبوظبي والإمارات</span><h2>خلّنا نبدأ<br /><i>من مسبحك.</i></h2></div><div className="contact-actions"><a className="button button-light" href={whatsapp} target="_blank" rel="noreferrer"><Waves size={18} /> واتساب الحجز</a><a className="contact-phone" href={`tel:${phone}`}><Phone size={18} /><span><small>اتصل مباشرة</small>{phone}</span></a></div></div></section>
       </main>
+
+      <footer className="footer"><div className="container footer-inner"><div className="brand footer-brand"><LogoMark /><span><b>همة الخليج</b><small>لإنشاء وصيانة المسابح</small></span></div><p>حلول متكاملة للمسابح في أبوظبي والإمارات.</p><span className="copyright">© 2026 همة الخليج</span></div></footer>
+      <a className="floating-wa" href={whatsapp} target="_blank" rel="noreferrer" aria-label="تواصل عبر واتساب"><span>واتساب الحجز</span><Waves size={25} /></a>
     </div>
   );
 }
