@@ -20,6 +20,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { startLogin } from "@/const";
+import { trpc } from "@/lib/trpc";
 import { useIsMobile } from "@/hooks/useMobile";
 import { ClipboardList, FileImage, LayoutDashboard, LogOut, MessageSquareQuote, PanelLeft, Sparkles } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
@@ -45,6 +46,9 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [adminUsername, setAdminUsername] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const adminLogin = trpc.adminLogin.useMutation({ onSuccess: () => window.location.reload() });
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
@@ -61,24 +65,14 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="text-2xl font-semibold tracking-tight text-center">
-              سجّل الدخول للمتابعة
-            </h1>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
-              تحتاج لوحة التحكم إلى تسجيل الدخول بحساب مدير الموقع.
-            </p>
-          </div>
-          <Button
-            onClick={() => startLogin()}
-            size="lg"
-            className="w-full shadow-lg hover:shadow-xl transition-all"
-          >
-            تسجيل الدخول
-          </Button>
-        </div>
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-muted/20 p-6">
+        <form onSubmit={event => { event.preventDefault(); adminLogin.mutate({ username: adminUsername, password: adminPassword }); }} className="w-full max-w-md space-y-6 rounded-3xl border bg-card p-8 shadow-xl">
+          <div><p className="text-sm font-bold text-primary">همة الخليج للمسابح</p><h1 className="mt-2 text-2xl font-black tracking-tight">دخول لوحة التحكم</h1><p className="mt-2 text-sm leading-6 text-muted-foreground">أدخل بيانات المدير لإدارة محتوى الموقع بأمان.</p></div>
+          <label className="block text-sm font-bold">اسم المستخدم<input value={adminUsername} onChange={event => setAdminUsername(event.target.value)} autoComplete="username" required className="mt-2 w-full rounded-xl border bg-background px-4 py-3 outline-none ring-primary/30 focus:ring-2" placeholder="اسم المستخدم" /></label>
+          <label className="block text-sm font-bold">كلمة المرور<input value={adminPassword} onChange={event => setAdminPassword(event.target.value)} autoComplete="current-password" type="password" required className="mt-2 w-full rounded-xl border bg-background px-4 py-3 outline-none ring-primary/30 focus:ring-2" placeholder="كلمة المرور" /></label>
+          {adminLogin.error && <p className="rounded-xl bg-destructive/10 p-3 text-sm font-semibold text-destructive">بيانات الدخول غير صحيحة.</p>}
+          <Button type="submit" disabled={adminLogin.isPending} size="lg" className="w-full shadow-lg transition-all">{adminLogin.isPending ? "جارٍ التحقق..." : "تسجيل الدخول"}</Button>
+        </form>
       </div>
     );
   }
@@ -108,6 +102,7 @@ function DashboardLayoutContent({
   setSidebarWidth,
 }: DashboardLayoutContentProps) {
   const { user, logout } = useAuth();
+  const adminLogout = trpc.adminLogout.useMutation();
   const [location, setLocation] = useLocation();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
@@ -223,7 +218,7 @@ function DashboardLayoutContent({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem
-                  onClick={logout}
+                  onClick={async () => { await adminLogout.mutateAsync(); await logout(); }}
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />

@@ -1,9 +1,11 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { createReview, createService, dashboardCounts, deleteService, listLeads, listProjects, listReviews, listServices, setReviewPublished, updateLeadStatus, updateService } from "./db";
+import { ADMIN_SESSION_COOKIE, createAdminSession, verifyAdminCredentials } from "./adminAuth";
 
 const serviceInput = z.object({
   title: z.string().min(2).max(180),
@@ -23,6 +25,16 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
+  }),
+  adminLogin: publicProcedure.input(z.object({ username: z.string().min(1), password: z.string().min(1) })).mutation(async ({ input, ctx }) => {
+    if (!verifyAdminCredentials(input.username, input.password)) throw new TRPCError({ code: "UNAUTHORIZED", message: "بيانات الدخول غير صحيحة" });
+    const token = await createAdminSession(input.username);
+    ctx.res.cookie(ADMIN_SESSION_COOKIE, token, { httpOnly: true, secure: true, sameSite: "lax", maxAge: 8 * 60 * 60 * 1000, path: "/" });
+    return { success: true } as const;
+  }),
+  adminLogout: publicProcedure.mutation(({ ctx }) => {
+    ctx.res.clearCookie(ADMIN_SESSION_COOKIE, { httpOnly: true, secure: true, sameSite: "lax", maxAge: 0, path: "/" });
+    return { success: true } as const;
   }),
   publicContent: router({
     services: publicProcedure.query(async () => (await listServices()).filter(item => item.isActive === 1)),
