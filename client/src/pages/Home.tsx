@@ -27,6 +27,7 @@ const whatsapp = "https://wa.me/971555991700?text=" + encodeURIComponent("مرح
 const facebook = "https://www.facebook.com/himat.alkhalij.2025";
 const instagram = "https://www.instagram.com/alkhalijhimat";
 const tiktok = "https://www.tiktok.com/@himatalkhalij";
+const logoUrl = "https://halkhalij.github.io/halkhalij/assets/himmat-official-logo-cropped.png";
 
 const services = [
   {
@@ -54,7 +55,7 @@ const services = [
 
 function LogoMark() {
   const [failed, setFailed] = useState(false);
-  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src="/manus-storage/himmat-official-logo-cropped_178253bc.png" alt="همة الخليج لصيانة وتركيب المسابح" onError={() => setFailed(true)} /></span>;
+  return failed ? <span className="brand-mark logo-fallback" aria-hidden="true"><span className="mark-arc" /><span className="mark-wave" /></span> : <span className="brand-mark" aria-hidden="true"><img src={logoUrl} alt="همة الخليج لصيانة وتركيب المسابح" onError={() => setFailed(true)} /></span>;
 }
 
 const realProjects = [
