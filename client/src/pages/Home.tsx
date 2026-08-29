@@ -111,7 +111,6 @@ export default function Home() {
 
       <main id="main-content">
         <section id="top" className="hero">
-          <div className="hero-image" aria-hidden="true" />
           <div className="hero-overlay" />
           <div className="container hero-content">
             <div className="hero-copy reveal">
