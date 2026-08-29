@@ -153,6 +153,8 @@ function vitePluginManusDebugCollector(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
+  // GitHub Pages serves this project from /halkhalij/; local and Manus previews stay at root.
+  base: process.env.GITHUB_ACTIONS ? "/halkhalij/" : "/",
   plugins,
   resolve: {
     alias: {
