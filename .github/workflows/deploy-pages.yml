@@ -39,8 +39,10 @@ jobs:
           GITHUB_ACTIONS: true
         run: pnpm exec vite build
 
-      - name: Include static logo asset
-        run: cp assets/himmat-official-logo-cropped.png dist/public/assets/himmat-official-logo-cropped.png
+      - name: Include static media assets
+        run: |
+          cp assets/himmat-official-logo-cropped.png dist/public/assets/himmat-official-logo-cropped.png
+          cp -R assets/media dist/public/assets/media
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

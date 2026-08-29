@@ -28,27 +28,28 @@ const facebook = "https://www.facebook.com/himat.alkhalij.2025";
 const instagram = "https://www.instagram.com/alkhalijhimat";
 const tiktok = "https://www.tiktok.com/@himatalkhalij";
 const logoUrl = "https://halkhalij.github.io/halkhalij/assets/himmat-official-logo-cropped.png";
+const mediaBase = "https://halkhalij.github.io/halkhalij/assets/media";
 
 const services = [
   {
     number: "01",
     title: "إنشاء وتصميم المسابح",
     text: "من الفكرة الأولى حتى آخر تفصيلة، نصمم مسبحًا ينسجم مع بيتك وطريقة استخدامك.",
-    image: "/manus-storage/himmat-real-pool-finish_7a066c0c.jpg",
+    image: `${mediaBase}/himmat-real-pool-finish_7a066c0c.jpg`,
     icon: HardHat,
   },
   {
     number: "02",
     title: "تنظيف احترافي",
     text: "مياه صافية، حواف نظيفة، وعناية دقيقة تعيد للمسبح إحساسه المنعش طوال العام.",
-    image: "/manus-storage/himmat-real-water-detail_ed154fee.jpg",
+    image: `${mediaBase}/himmat-real-water-detail_ed154fee.jpg`,
     icon: Sparkles,
   },
   {
     number: "03",
     title: "صيانة وفحص دوري",
     text: "نتابع الفلاتر والمضخات والمياه بخطة واضحة تقلل الأعطال وتحافظ على سلامة السباحة.",
-    image: "/manus-storage/himmat-real-detail-2_a12d3e8b.jpg",
+    image: `${mediaBase}/himmat-real-detail-2_a12d3e8b.jpg`,
     icon: Wrench,
   },
 ];
@@ -59,8 +60,8 @@ function LogoMark() {
 }
 
 const realProjects = [
-  { title: "تشطيب مسبح", label: "نقاء المياه وجودة التشطيب", src: "/manus-storage/2_5226677566588362962_83de67d3.mp4", mediaType: "video" as const },
-  { title: "مسبح وجلسة", label: "تنفيذ متكامل للمسبح والحديقة", src: "/manus-storage/2_5226677566588362963_c6fc4926.mp4", mediaType: "video" as const },
+  { title: "تشطيب مسبح", label: "نقاء المياه وجودة التشطيب", src: `${mediaBase}/2_5226677566588362962_83de67d3.mp4`, mediaType: "video" as const },
+  { title: "مسبح وجلسة", label: "تنفيذ متكامل للمسبح والحديقة", src: `${mediaBase}/2_5226677566588362963_c6fc4926.mp4`, mediaType: "video" as const },
 ];
 
 const faqs = [
